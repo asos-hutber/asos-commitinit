@@ -1,0 +1,39 @@
+{
+  "name": "asos-mvt-conventional-changelog",
+  "version": "0.0.1",
+  "description":
+    "Asos MVT Commitizen adapter following the conventional-changelog format",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0",
+    "lint": "eslint {prompt/**,.}/*.js",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": ["prettier --write", "git add"]
+  },
+  "author": "ASOS MVT <optimisationTeam@ASOS.com>>",
+  "homepage": "https://github.com/asosteam/asos-mvt-conventional-changelog",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:asosteam/asos-mvt-conventional-changelog.git"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "app-root-path": "^2.0.1",
+    "inquirer": "^3.1.1",
+    "shelljs": "^0.7.8",
+    "word-wrap": "^1.2.3"
+  },
+  "devDependencies": {
+    "commitizen": "^2.9.5",
+    "husky": "^0.13.4",
+    "lint-staged": "^6.0.0",
+    "prettier": "^1.9.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./index.js"
+    }
+  }
+}
