@@ -1,4 +1,4 @@
-const MAX_SUBJECT_LENGTH = 50;
+const MAX_SUBJECT_LENGTH = 66;
 const MIN_SUBJECT_LENGTH = 3;
 const MIN_SUBJECT_LENGTH_ERROR_MESSAGE = `The subject must have at least ${MIN_SUBJECT_LENGTH} characters`;
 
@@ -82,6 +82,5 @@ const questions = [
 ];
 
 module.exports = {
-  makePackagesQuestion,
   questions
 };

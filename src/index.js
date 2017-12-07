@@ -49,7 +49,7 @@ module.exports = {
       }
 
       if (footer) {
-        msg += "\n\nIssues: " + footer;
+        msg += "\n\nIssues: WMVT-230" + footer;
       }
 
       return commit(msg);
