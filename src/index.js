@@ -4,6 +4,7 @@ const wrap = require("word-wrap");
 const appRoot = require("app-root-path");
 const { questions } = require("./prompt/questions");
 const LimitedInput = require("./prompt/LimitedInput");
+const shell = require("shelljs");
 
 const MAX_LINE_WIDTH = 72;
 
@@ -21,38 +22,40 @@ const makeAffectsLine = function(answers) {
 
 module.exports = {
   prompter(cz, commit) {
-    return inquirer.prompt(questions).then(answers => {
-      const wrapOptions = {
-        indent: "",
-        trim: true,
-        width: MAX_LINE_WIDTH
-      };
+    return shell.exec("npm run lint", function(code, stdout, stderr) {
+      return inquirer.prompt(questions).then(answers => {
+        const wrapOptions = {
+          indent: "",
+          trim: true,
+          width: MAX_LINE_WIDTH
+        };
 
-      const head = answers.type + ": " + answers.subject;
-      const affectsLine = makeAffectsLine(answers);
+        const head = answers.type + ": " + answers.subject;
+        const affectsLine = makeAffectsLine(answers);
 
-      // Wrap these lines at MAX_LINE_WIDTH character
-      const body = wrap(answers.body + affectsLine, wrapOptions);
-      const breaking = wrap(answers.breaking, wrapOptions);
-      const footer = wrap(answers.footer, wrapOptions);
+        // Wrap these lines at MAX_LINE_WIDTH character
+        const body = wrap(answers.body + affectsLine, wrapOptions);
+        const breaking = wrap(answers.breaking, wrapOptions);
+        const footer = wrap(answers.footer, wrapOptions);
 
-      let msg;
+        let msg;
 
-      msg = head;
+        msg = head;
 
-      if (body) {
-        msg += "\n\n" + body;
-      }
+        if (body) {
+          msg += "\n\n" + body;
+        }
 
-      if (breaking) {
-        msg += "\n\nBREAKING CHANGE: " + breaking;
-      }
+        if (breaking) {
+          msg += "\n\nBREAKING CHANGE: " + breaking;
+        }
 
-      if (footer) {
-        msg += "\n\nIssues: WMVT-230" + footer;
-      }
+        if (footer) {
+          msg += "\n\nIssues: WMVT-230" + footer;
+        }
 
-      return commit(msg);
+        return commit(msg);
+      });
     });
   }
 };
